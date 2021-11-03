@@ -8,20 +8,27 @@ import (
 )
 
 
-func newRouter()*mux.Router  {
-	r:= mux.NewRouter()
+
+func newRouter() *mux.Router {
+	r := mux.NewRouter()
 
 	r.HandleFunc("/hello", handler).Methods("GET")
 
+	// Declare a static file directory and point it to the assests
+
+	staticFileDirectory := http.Dir("./assets/")
+
+	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
+
+	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
+	r.HandleFunc("/dish", GetStewHandler).Methods("GET")
+	r.HandleFunc("/dish", CreateStewHandler).Methods("POST")
 	return r
 }
-
 
 func main() {
 	// Declare a new route
 	r := newRouter()
-
-	
 
 	http.ListenAndServe(":8080", r)
 }
