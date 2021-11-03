@@ -8,21 +8,24 @@ import (
 )
 
 
-func main()  {
-// Declare a new route 
-r := mux.NewRouter()
+func newRouter()*mux.Router  {
+	r:= mux.NewRouter()
 
-	
+	r.HandleFunc("/hello", handler).Methods("GET")
 
-
-	r.HandleFunc("/hello" , handler).Methods("GET")
-
-
-
-	http.ListenAndServe(":8080",r)
+	return r
 }
 
 
-func handler(w http.ResponseWriter , r *http.Request)  {
-	fmt.Fprintf(w,"Hello  Mahinya")
+func main() {
+	// Declare a new route
+	r := newRouter()
+
+	
+
+	http.ListenAndServe(":8080", r)
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello  Mahinya")
 }
