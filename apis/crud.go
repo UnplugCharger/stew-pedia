@@ -1,4 +1,4 @@
-package handlers
+package apis
 
 import (
 	"encoding/json"
@@ -48,4 +48,3 @@ func CreateStewHandle(w http.ResponseWriter , r *http.Request)  {
 
 	http.Redirect(w,r,"/assets/", http.StatusFound) 
 } 
-

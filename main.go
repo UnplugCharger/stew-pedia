@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/byron/stew-pedia/apis"
 	"github.com/gorilla/mux"
 )
 
@@ -21,15 +22,16 @@ func newRouter() *mux.Router {
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 
 	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")
-	r.HandleFunc("/dish", GetStewHandler).Methods("GET")
-	r.HandleFunc("/dish", CreateStewHandler).Methods("POST")
+	r.HandleFunc("/dish", apis.GetStewHandler).Methods("GET")
+	r.HandleFunc("/dish", apis.CreateStewHandle).Methods("POST")
 	return r
 }
 
 func main() {
 	// Declare a new route
 	r := newRouter()
-
+    
+	
 	http.ListenAndServe(":8080", r)
 }
 
